@@ -212,12 +212,13 @@ export default {
     },
     getFile(rawFile) {
       let fileList = this.uploadFiles;
-      let target;
-      fileList.every(item => {
-        target = rawFile.uid === item.uid ? item : null;
-        return !target;
-      });
-      return target;
+      for (var i = fileList.length - 1; i >= 0; i--) {
+        let f = fileList[i];
+        if (rawFile.uid === f.uid) {
+          return f;
+        }
+      }
+      return null;
     },
     abort(file) {
       this.$refs['upload-inner'].abort(file);
